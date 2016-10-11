@@ -1,9 +1,9 @@
 class Monosasi::Exporter
-  class << self
-    def export(client, options = {})
-      self.new(client, options).export
-    end
-  end # of class methods
+  CONCURRENCY = 8
+
+  def self.export(client, options = {})
+    self.new(client, options).export
+  end
 
   def initialize(client, options = {})
     @client = client
@@ -17,10 +17,10 @@ class Monosasi::Exporter
   private
 
   def export_rules
-    result = {}
+    rule_by_name = {}
     resp = @client.list_rules
 
-    resp.rules.each do |rule|
+    Parallel.each(resp.rules, in_threads: CONCURRENCY) do |rule|
       rule = rule.to_h
       name = rule.delete(:name)
 
@@ -32,14 +32,14 @@ class Monosasi::Exporter
       targets = export_targets(name)
       rule[:targets] = targets
 
-      result[name] = rule
+      rule_by_name[name] = rule
     end
 
-    result
+    rule_by_name
   end
 
   def export_targets(rule)
-    result = {}
+    target_by_id = {}
     resp = @client.list_targets_by_rule(rule: rule)
 
     resp.targets.each do |target|
@@ -50,9 +50,9 @@ class Monosasi::Exporter
         target[:input] = JSON.parse(target[:input])
       end
 
-      result[id] = target
+      target_by_id[id] = target
     end
 
-    result
+    target_by_id
   end
 end
