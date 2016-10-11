@@ -31,8 +31,31 @@ class Monosasi::Client
 
   def walk_rules(expected, actual)
     updated = false
-    # TODO:
+
+    expected.each do |rule_name,  expected_rule|
+      # TODO: check target options
+
+      actual_rule = actual.delete(rule_name)
+
+      unless actual_rule
+        # TODO: create_rule
+        updated = true
+      end
+
+      updated = walk_rule(rule_name, expected_rule, actual_rule) || updated
+    end
+
+    actual.each do |rule_name, actual_rule|
+      # TODO: check target options
+      # TODO: delete_rule
+      updated = true
+    end
+
     updated
+  end
+
+  def walk_rule(rule_name, expected, actual)
+    # TODO:
   end
 
   def load_file(file)
