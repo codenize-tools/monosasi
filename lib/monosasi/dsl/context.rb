@@ -32,12 +32,12 @@ class Monosasi::DSL::Context
   private
 
   def require(file)
-    rulefile = (file =~ %r|\A/|) ? file : File.expand_path(File.join(File.dirname(@path), file))
+    rule_file = (file =~ %r|\A/|) ? file : File.expand_path(File.join(File.dirname(@path), file))
 
-    if File.exist?(rulefile)
-      instance_eval(File.read(rulefile), rulefile)
-    elsif File.exist?(rulefile + '.rb')
-      instance_eval(File.read(rulefile + '.rb'), rulefile + '.rb')
+    if File.exist?(rule_file)
+      instance_eval(File.read(rule_file), rule_file)
+    elsif File.exist?(rule_file + '.rb')
+      instance_eval(File.read(rule_file + '.rb'), rule_file + '.rb')
     else
       Kernel.require(file)
     end

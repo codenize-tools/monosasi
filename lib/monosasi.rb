@@ -1,13 +1,19 @@
 require 'aws-sdk'
 require 'hashie'
 require 'json'
+require 'logger'
 require 'parallel'
 require 'pp'
+require 'singleton'
 require 'term/ansicolor'
 
 require 'monosasi/version'
+
 require 'monosasi/ext/hash_ext'
 require 'monosasi/ext/string_ext'
+require 'monosasi/logger'
+
+require 'monosasi/client'
 require 'monosasi/dsl'
 require 'monosasi/dsl/template_helper'
 require 'monosasi/dsl/context'

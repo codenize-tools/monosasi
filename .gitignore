@@ -8,3 +8,5 @@
 /spec/reports/
 /tmp/
 test.rb
+Rulefile
+*.rule
