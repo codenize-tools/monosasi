@@ -14,6 +14,7 @@ require 'monosasi/ext/string_ext'
 require 'monosasi/logger'
 
 require 'monosasi/client'
+require 'monosasi/driver'
 require 'monosasi/dsl'
 require 'monosasi/dsl/template_helper'
 require 'monosasi/dsl/context'

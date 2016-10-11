@@ -1,10 +1,6 @@
 class Monosasi::Exporter
   CONCURRENCY = 8
 
-  def self.export(client, options = {})
-    self.new(client, options).export
-  end
-
   def initialize(client, options = {})
     @client = client
     @options = options
