@@ -5,7 +5,6 @@ class Monosasi::DSL
     end
 
     def parse(dsl, path, options = {})
-      # TODO:
       Monosasi::DSL::Context.eval(dsl, path, options).result
     end
   end # of class methods

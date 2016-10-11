@@ -74,9 +74,7 @@ end
       input.gsub!(/^/, "\s" * 6)
 
       body += <<-EOS
-    input do
-      #{input.strip}
-    end
+    input #{target[:input].inspect}
       EOS
     end
 

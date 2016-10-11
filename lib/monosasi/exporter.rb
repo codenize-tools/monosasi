@@ -11,7 +11,7 @@ class Monosasi::Exporter
   end
 
   def export
-    export_rules
+    export_rules.sort_array!
   end
 
   private
@@ -38,18 +38,13 @@ class Monosasi::Exporter
     rule_by_name
   end
 
-  def export_targets(rule)
+  def export_targets(rule_name)
     target_by_id = {}
-    resp = @client.list_targets_by_rule(rule: rule)
+    resp = @client.list_targets_by_rule(rule: rule_name)
 
     resp.targets.each do |target|
       target = target.to_h
       id = target.delete(:id)
-
-      if target[:input]
-        target[:input] = JSON.parse(target[:input])
-      end
-
       target_by_id[id] = target
     end
 
