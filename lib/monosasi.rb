@@ -1,5 +1,5 @@
-require "monosasi/version"
+require 'aws-sdk'
+require 'json'
 
-module Monosasi
-  # Your code goes here...
-end
+require 'monosasi/version'
+require 'monosasi/exporter'
