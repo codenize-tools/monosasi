@@ -59,26 +59,31 @@ Usage: monosasi [options]
 ```ruby
 require 'other/rulefile'
 
-bucket "foo-bucket" do
-  {"Version"=>"2012-10-17",
-   "Id"=>"AWSConsole-AccessLogs-Policy-XXX",
-   "Statement"=>
-    [{"Sid"=>"AWSConsoleStmt-XXX",
-      "Effect"=>"Allow",
-      "Principal"=>{"AWS"=>"arn:aws:iam::XXX:root"},
-      "Action"=>"s3:PutObject",
-      "Resource"=>
-       "arn:aws:s3:::foo-bucket/AWSLogs/XXX/*"}]}
+rule "cron" do
+  state "ENABLED"
+  description "my cron"
+  schedule_expression "cron(0 17 ? * MON-FRI *)"
+  target "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" do
+    arn "arn:aws:lambda:ap-northeast-1:123456789012:function:hello-world"
+    input_path '$.detail'
+  end
+  target "yyyyyyyy-yyyy-yyyy-yyyy-yyyyyyyyyyyy" do
+    arn "arn:aws:lambda:ap-northeast-1:123456789012:function:my-func"
+  end
 end
 
-bucket "bar-bucket" do
-  {"Version"=>"2012-10-17",
-   "Statement"=>
-    [{"Sid"=>"AddPerm",
-      "Effect"=>"Allow",
-      "Principal"=>"*",
-      "Action"=>"s3:GetObject",
-      "Resource"=>"arn:aws:s3:::bar-bucket/*"}]}
+rule "ssm role" do
+  state "ENABLED"
+  event_pattern do
+    {"detail-type"=>
+      ["EC2 Command Invocation Status-change Notification",
+       "EC2 Command Status-change Notification"],
+     "source"=>["aws.ssm"]}
+  end
+  target "zzzzzzzz-zzzz-zzzz-zzzz-zzzzzzzzzzzz" do
+    arn "arn:aws:lambda:ap-northeast-1:123456789012:function:trigger-func"
+    input '{"foo": "bar"}'
+  end
 end
 ```
 
