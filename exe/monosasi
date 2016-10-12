@@ -126,6 +126,7 @@ def main(argv)
         puts dsl
       else
         logger.info("Export Rule to `#{output}`")
+
         open(output, 'wb') do |f|
           f.puts MAGIC_COMMENT
           f.puts dsl
