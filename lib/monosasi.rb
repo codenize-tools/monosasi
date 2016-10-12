@@ -1,4 +1,5 @@
 require 'aws-sdk'
+require 'diffy'
 require 'hashie'
 require 'json'
 require 'logger'
@@ -12,6 +13,7 @@ require 'monosasi/version'
 require 'monosasi/ext/hash_ext'
 require 'monosasi/ext/string_ext'
 require 'monosasi/logger'
+require 'monosasi/utils/diff'
 
 require 'monosasi/client'
 require 'monosasi/driver'
