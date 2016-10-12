@@ -123,6 +123,7 @@ def main(argv)
 
       if output == '-'
         logger.info('# Export Rule')
+
         puts dsl
       else
         logger.info("Export Rule to `#{output}`")
