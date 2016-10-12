@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ['winebarrel']
   spec.email         = ['sgwr_dts@yahoo.co.jp']
 
-  spec.summary       = %q{TODO: Write a short summary, because Rubygems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
+  spec.summary       = %q{Monosasi is a tool to manage Cloudwatch Events rules.}
+  spec.description   = %q{Monosasi is a tool to manage Cloudwatch Events rules.}
   spec.homepage      = 'https://github.com/winebarrel/monosasi'
   spec.license       = 'MIT'
 
