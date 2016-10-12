@@ -21,7 +21,7 @@ class Monosasi::Logger < ::Logger
       message = "[#{level.to_s.upcase}] #{message}" unless level == :info
       message << ' (dry-run)' if global_option[:dry_run]
       message = message.send(log_options[:color]) if log_options[:color]
-      logger = global_option[:logger] || Bukelatta::Logger.instance
+      logger = global_option[:logger] || Monosasi::Logger.instance
       logger.send(level, message)
     end
   end

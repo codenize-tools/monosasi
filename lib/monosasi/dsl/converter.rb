@@ -26,9 +26,14 @@ class Monosasi::DSL::Converter
 
   def output_rule(name, rule)
     body = <<-EOS
-  arn #{rule[:arn].inspect}
   state #{rule[:state].inspect}
     EOS
+
+    if rule[:description]
+      body += <<-EOS
+  description #{rule[:description].inspect}
+      EOS
+    end
 
     if rule[:schedule_expression]
       body += <<-EOS

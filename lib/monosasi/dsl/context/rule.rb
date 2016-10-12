@@ -12,12 +12,12 @@ class Monosasi::DSL::Context::Rule
 
   private
 
-  def arn(value)
-    @result[:arn] = value.to_s
-  end
-
   def state(value)
     @result[:state] = value.to_s
+  end
+
+  def description(value)
+    @result[:description] = value.to_s
   end
 
   def schedule_expression(value)
@@ -36,6 +36,6 @@ class Monosasi::DSL::Context::Rule
 
   def target(id, &block)
     id = id.to_s
-    @result[id] = Monosasi::DSL::Context::Rule::Target.new(@context, id, &block).result
+    @result[:targets][id] = Monosasi::DSL::Context::Rule::Target.new(@context, id, &block).result
   end
 end

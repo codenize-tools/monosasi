@@ -32,22 +32,22 @@ class Monosasi::Client
   def walk_rules(expected, actual)
     updated = false
 
-    expected.each do |rule_name,  expected_rule|
+    expected.each do |rule_name, expected_rule|
       # TODO: check target options
 
       actual_rule = actual.delete(rule_name)
 
       unless actual_rule
-        # TODO: create_rule
+        @driver.create_rule(rule_name, expected_rule)
         updated = true
+        actual_rule = expected_rule.merge(:targets => {})
       end
 
       updated = walk_rule(rule_name, expected_rule, actual_rule) || updated
     end
 
     actual.each do |rule_name, actual_rule|
-      # TODO: check target options
-      # TODO: delete_rule
+      @driver.delete_rule(rule_name, actual_rule)
       updated = true
     end
 
@@ -55,7 +55,43 @@ class Monosasi::Client
   end
 
   def walk_rule(rule_name, expected, actual)
-    # TODO:
+    updated = false
+
+    expected_without_targets = expected.dup
+    expected_targets = expected_without_targets.delete(:targets)
+
+    actual_without_targets = actual.dup
+    actual_targets = actual_without_targets.delete(:targets)
+
+    if expected_without_targets != actual_without_targets
+      @driver.update_rule(rule_name, expected_without_targets, actual_without_targets)
+      updated = true
+    end
+
+    walk_targets(rule_name, expected_targets, actual_targets) || updated
+  end
+
+  def walk_targets(rule_name, expected, actual)
+    updated = false
+
+    expected.each do |target_id, expected_target|
+      actual_target = actual.delete(target_id)
+
+      if not actual_target
+        @driver.create_target(rule_name, target_id, expected_target)
+        updated = true
+      elsif expected_target != actual_target
+        @driver.update_target(rule_name, target_id, expected_target, actual_target)
+        updated = true
+      end
+    end
+
+    actual.each do |target_id, actual_target|
+      @driver.delete_target(rule_name, target_id)
+      updated = true
+    end
+
+    updated
   end
 
   def load_file(file)

@@ -18,6 +18,7 @@ class Monosasi::Exporter
 
     Parallel.each(resp.rules, in_threads: CONCURRENCY) do |rule|
       rule = rule.to_h
+      rule.delete(:arn)
       name = rule.delete(:name)
 
       if rule[:event_pattern]
