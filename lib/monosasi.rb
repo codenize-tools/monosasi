@@ -15,6 +15,7 @@ require 'monosasi/ext/hash_ext'
 require 'monosasi/ext/string_ext'
 require 'monosasi/logger'
 require 'monosasi/utils/diff'
+require 'monosasi/utils/target_matcher'
 
 require 'monosasi/client'
 require 'monosasi/driver'

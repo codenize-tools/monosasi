@@ -1,4 +1,6 @@
 class Monosasi::Exporter
+  include Monosasi::Utils::TargetMatcher
+
   CONCURRENCY = 8
 
   def initialize(client, options = {})
@@ -19,17 +21,18 @@ class Monosasi::Exporter
     Parallel.each(resp.rules, in_threads: CONCURRENCY) do |rule|
       rule = rule.to_h
       rule.delete(:arn)
-      name = rule.delete(:name)
+      rule_name = rule.delete(:name)
+
+      next unless target?(rule_name)
 
       if rule[:event_pattern]
         rule[:event_pattern] = JSON.parse(rule[:event_pattern])
       end
 
-      # TODO: check target options
-      targets = export_targets(name)
+      targets = export_targets(rule_name)
       rule[:targets] = targets
 
-      rule_by_name[name] = rule
+      rule_by_name[rule_name] = rule
     end
 
     rule_by_name

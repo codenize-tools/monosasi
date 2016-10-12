@@ -1,4 +1,6 @@
 class Monosasi::Client
+  include Monosasi::Utils::TargetMatcher
+
   def initialize(options = {})
     @options = options
     @client = @options[:client] || Aws::CloudWatchEvents::Client.new
@@ -33,7 +35,7 @@ class Monosasi::Client
     updated = false
 
     expected.each do |rule_name, expected_rule|
-      # TODO: check target options
+      next unless target?(rule_name)
 
       actual_rule = actual.delete(rule_name)
 
@@ -47,6 +49,8 @@ class Monosasi::Client
     end
 
     actual.each do |rule_name, actual_rule|
+      next unless target?(rule_name)
+
       @driver.delete_rule(rule_name, actual_rule)
       updated = true
     end
