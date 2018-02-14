@@ -89,6 +89,18 @@ end
       EOS
     end
 
+    if target[:ecs_parameters]
+      body += <<-EOS
+    ecs_parameters #{target[:ecs_parameters].inspect}
+      EOS
+    end
+
+    if target[:role_arn]
+      body += <<-EOS
+    role_arn #{target[:role_arn].inspect}
+      EOS
+    end
+
     <<-EOS.chomp
   target #{id.inspect} do
     #{body.strip}

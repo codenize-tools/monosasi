@@ -23,4 +23,12 @@ class Monosasi::DSL::Context::Rule::Target
   def input(value)
     @result[:input] = value.to_s
   end
+
+  def role_arn(value)
+    @result[:role_arn] = value.to_s
+  end
+
+  def ecs_parameters(*values)
+    @result[:ecs_parameters] = Hash(*values)
+  end
 end
