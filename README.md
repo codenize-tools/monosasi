@@ -85,6 +85,21 @@ rule "ssm role" do
     input '{"foo": "bar"}'
   end
 end
+
+rule "esc-scheduled-task" do
+  state "ENABLED"
+  description "zzzzzzzz"
+  schedule_expression "rate(30 minutes)"
+  target "zzzzzzzzzz-zzzzzzz-zzzzzz" do
+    arn "arn:aws:ecs:ap-northeast-1:33333333333:cluster/xxxxxxxxxxxxx"
+    role_arn "arn:aws:iam::11111111:role/ecsEventsRole"
+    input "{}"
+    ecs_parameters ({
+      :task_definition_arn => "arn:aws:ecs:ap-northeast-1:1111111111111:task-definition/xxxxxxxxxx:x",
+      :task_count => 1000
+    })
+  end
+end
 ```
 
 ## Similar tools
