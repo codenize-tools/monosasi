@@ -100,6 +100,15 @@ class Monosasi::Driver
     if target[:input_path]
       params_target[:input_path] = target[:input_path]
     end
+
+    if target[:role_arn]
+      params_target[:role_arn] = target[:role_arn]
+    end
+
+    if target[:ecs_parameters]
+      params_target[:ecs_parameters] = target[:ecs_parameters]
+    end
+
     params = {
       :rule => rule_name,
       :targets => [params_target],
