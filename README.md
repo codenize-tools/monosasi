@@ -50,9 +50,13 @@ Usage: monosasi [options]
     -o, --output FILE
         --split
         --target REGEXP
+        --include REGEXP
+        --exclude REGEXP
         --no-color
         --debug
 ```
+
+Note that now `--target` option is deprecated so it will be removed eventually. So consider use equivalent option `--include` instead of.
 
 ## Rulefile example
 

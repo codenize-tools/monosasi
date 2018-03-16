@@ -36,15 +36,17 @@ def parse_options(argv)
     options[:aws][:credentials][:path] = v
   end
 
-  opt.on('-a', '--apply')         {    options[:mode]    = :apply        }
-  opt.on('-f', '--file FILE')     {|v| options[:file]    = v             }
-  opt.on(''  , '--dry-run')       {    options[:dry_run] = true          }
-  opt.on('-e', '--export')        {    options[:mode]    = :export       }
-  opt.on('-o', '--output FILE')   {|v| options[:output]  = v             }
-  opt.on(''  , '--split')         {    options[:split]   = :true         }
-  opt.on(''  , '--target REGEXP') {|v| options[:target]  = Regexp.new(v) }
-  opt.on(''  , '--no-color')      {    options[:color]   = false         }
-  opt.on(''  , '--debug')         {    options[:debug]   = true          }
+  opt.on('-a', '--apply')          {    options[:mode]    = :apply        }
+  opt.on('-f', '--file FILE')      {|v| options[:file]    = v             }
+  opt.on(''  , '--dry-run')        {    options[:dry_run] = true          }
+  opt.on('-e', '--export')         {    options[:mode]    = :export       }
+  opt.on('-o', '--output FILE')    {|v| options[:output]  = v             }
+  opt.on(''  , '--split')          {    options[:split]   = :true         }
+  opt.on(''  , '--target REGEXP')  {|v| options[:target]  = Regexp.new(v) }
+  opt.on(''  , '--include REGEXP') {|v| options[:include] = Regexp.new(v) }
+  opt.on(''  , '--exclude REGEXP') {|v| options[:exclude] = Regexp.new(v) }
+  opt.on(''  , '--no-color')       {    options[:color]   = false         }
+  opt.on(''  , '--debug')          {    options[:debug]   = true          }
 
   opt.parse!(argv)
 
@@ -68,6 +70,10 @@ def parse_options(argv)
       :http_wire_trace => true,
       :logger => Monosasi::Logger.instance
     )
+  end
+
+  if options[:target]
+    Monosasi::Logger.instance.warn('--target option is deprecated so it will be removed eventually. Consider use --incldue option instead of.')
   end
 
   options
