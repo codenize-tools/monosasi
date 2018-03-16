@@ -1,3 +1,3 @@
 module Monosasi
-  VERSION = '0.1.1.beta'
+  VERSION = '0.1.2'
 end
