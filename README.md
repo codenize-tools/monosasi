@@ -104,6 +104,21 @@ rule "esc-scheduled-task" do
     })
   end
 end
+
+rule "batch-scheduled-task" do
+  state "ENABLED"
+  description "zzzzzzzz"
+  schedule_expression "rate(30 minutes)"
+  target "zzzzzzzzzz-zzzzzzz-zzzzzz" do
+    arn "arn:aws:batch:ap-northeast-1:33333333333:job-queue/xxxxxxxxxxxxx"
+    role_arn "arn:aws:iam::11111111:role/xxxXxx"
+    input "{}"
+    batch_parameters ({
+      :job_definition_arn => "arn:aws:batch:ap-northeast-1:1111111111111:job-definition/xxxxxxxxxx:x",
+      :job_name => "zzzzzzzz"
+    })
+  end
+end
 ```
 
 ## Similar tools

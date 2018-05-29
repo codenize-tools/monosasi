@@ -109,6 +109,10 @@ class Monosasi::Driver
       params_target[:ecs_parameters] = target[:ecs_parameters]
     end
 
+    if target[:batch_parameters]
+      params_target[:batch_parameters] = target[:batch_parameters]
+    end
+
     params = {
       :rule => rule_name,
       :targets => [params_target],
