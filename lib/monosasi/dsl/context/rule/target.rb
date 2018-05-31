@@ -31,4 +31,8 @@ class Monosasi::DSL::Context::Rule::Target
   def ecs_parameters(*values)
     @result[:ecs_parameters] = Hash(*values)
   end
+
+  def batch_parameters(*values)
+    @result[:batch_parameters] = Hash(*values)
+  end
 end

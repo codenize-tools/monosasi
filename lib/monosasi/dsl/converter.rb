@@ -101,6 +101,12 @@ end
       EOS
     end
 
+    if target[:batch_parameters]
+      body += <<-EOS
+    batch_parameters #{target[:batch_parameters].inspect}
+      EOS
+    end
+
     <<-EOS.chomp
   target #{id.inspect} do
     #{body.strip}
