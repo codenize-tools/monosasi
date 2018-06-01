@@ -16,23 +16,28 @@ class Monosasi::Exporter
 
   def export_rules
     rule_by_name = {}
-    resp = @client.list_rules
+    next_token = nil
+    loop do
+      resp = @client.list_rules(next_token: next_token)
 
-    Parallel.each(resp.rules, in_threads: CONCURRENCY) do |rule|
-      rule = rule.to_h
-      rule.delete(:arn)
-      rule_name = rule.delete(:name)
+      Parallel.each(resp.rules, in_threads: CONCURRENCY) do |rule|
+        rule = rule.to_h
+        rule.delete(:arn)
+        rule_name = rule.delete(:name)
 
-      next unless target?(rule_name)
+        next unless target?(rule_name)
 
-      if rule[:event_pattern]
-        rule[:event_pattern] = JSON.parse(rule[:event_pattern])
+        if rule[:event_pattern]
+          rule[:event_pattern] = JSON.parse(rule[:event_pattern])
+        end
+
+        targets = export_targets(rule_name)
+        rule[:targets] = targets
+
+        rule_by_name[rule_name] = rule
       end
 
-      targets = export_targets(rule_name)
-      rule[:targets] = targets
-
-      rule_by_name[rule_name] = rule
+      break if (next_token = resp.next_token).nil?
     end
 
     rule_by_name
