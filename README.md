@@ -119,6 +119,21 @@ rule "batch-scheduled-task" do
     })
   end
 end
+
+rule "hako-console-ScaleSpotFleetByReservation-ap-northeast-1" do
+  state "ENABLED"
+  schedule_expression "rate(30 minutes)"
+  target "zzzzzzzzzz-zzzzzzz-zzzzzz" do
+    arn 'arn:aws:sqs:ap-northeast-1:33333333333:monosasi-events'
+    input_transformer(
+      input_paths_map: {
+        'id' => '$.id',
+        'time' => '$.time',
+      },
+      input_template: '{"id": <id>, "time": <time>, "message": "hello, world"}',
+    )
+  end
+end
 ```
 
 ## Similar tools

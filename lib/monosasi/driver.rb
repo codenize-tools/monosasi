@@ -101,6 +101,10 @@ class Monosasi::Driver
       params_target[:input_path] = target[:input_path]
     end
 
+    if target[:input_transformer]
+      params_target[:input_transformer] = target[:input_transformer]
+    end
+
     if target[:role_arn]
       params_target[:role_arn] = target[:role_arn]
     end

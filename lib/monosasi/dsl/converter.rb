@@ -89,6 +89,12 @@ end
       EOS
     end
 
+    if target[:input_transformer]
+      body += <<-EOS
+    input_transformer #{target[:input_transformer].inspect}
+      EOS
+    end
+
     if target[:ecs_parameters]
       body += <<-EOS
     ecs_parameters #{target[:ecs_parameters].inspect}

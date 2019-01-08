@@ -24,6 +24,10 @@ class Monosasi::DSL::Context::Rule::Target
     @result[:input] = value.to_s
   end
 
+  def input_transformer(value)
+    @result[:input_transformer] = value.to_h
+  end
+
   def role_arn(value)
     @result[:role_arn] = value.to_s
   end
