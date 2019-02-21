@@ -119,96 +119,10 @@ end
   end
 
   def output_ecs_parameters(params)
-    body = <<-EOS
-      task_definition_arn #{params[:task_definition_arn].inspect}
-    EOS
-
-    if params[:task_count]
-      body += <<-EOS
-      task_count #{params[:task_count]}
-      EOS
-    end
-
-    if params[:launch_type]
-      body += <<-EOS
-      launch_type #{params[:launch_type].inspect}
-      EOS
-    end
-
-    if params[:network_configuration]
-      body += output_network_configuration(params[:network_configuration])
-    end
-
-    if params[:platform_version]
-      body += <<-EOS
-      platform_version #{params[:platform_version].inspect}
-      EOS
-    end
-
-    if params[:group]
-      body += <<-EOS
-      group #{params[:group].inspect}
-      EOS
-    end
-
-    <<-EOS.chomp
-    ecs_parameters do
-      #{body.strip}
-    end
-    EOS
+    Dslh.deval({"ecs_parameters" => params}, initial_depth: 2, force_dump_braces: true)
   end
 
   def output_batch_parameters(params)
-    body = <<-EOS
-      job_definition #{params[:job_definition].inspect}
-      job_name #{params[:job_name].inspect}
-    EOS
-
-    <<-EOS.chomp
-    batch_parameters do
-      #{body.strip}
-    end
-    EOS
-  end
-
-  def output_network_configuration(params)
-    body = ''
-
-    if params[:awsvpc_configuration]
-      body += output_awsvpc_configuration(params[:awsvpc_configuration])
-      body += "\n"
-    end
-
-    <<-EOS.chomp
-      network_configuration do
-        #{body.strip}
-      end
-    EOS
-  end
-
-  def output_awsvpc_configuration(params)
-    # FYI: `subnets` is required, security_groups and assign_public_ip is optional.
-    # https://docs.aws.amazon.com/AmazonCloudWatchEvents/latest/APIReference/API_AwsVpcConfiguration.html
-    body = <<-EOS
-          subnets #{params[:subnets].inspect}
-    EOS
-
-    if params[:security_groups]
-      body += <<-EOS
-          security_groups #{params[:security_groups].inspect}
-      EOS
-    end
-
-    if params[:assign_public_ip]
-      body += <<-EOS
-          assign_public_ip #{params[:assign_public_ip].inspect}
-      EOS
-    end
-
-    <<-EOS.chomp
-        awsvpc_configuration do
-          #{body.strip}
-        end
-    EOS
+   Dslh.deval({"batch_parameters" => params}, initial_depth: 2, force_dump_braces: true)
   end
 end

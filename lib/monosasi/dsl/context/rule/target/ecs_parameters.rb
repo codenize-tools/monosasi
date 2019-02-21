@@ -65,12 +65,12 @@ class Monosasi::DSL::Context::Rule::Target::EcsParameters
 
       private
 
-      def subnets(value)
-        @result[:subnets] = value
+      def subnets(values)
+        @result[:subnets] = values
       end
 
-      def security_groups(value)
-        @result[:security_groups] = value
+      def security_groups(values)
+        @result[:security_groups] = values
       end
 
       def assign_public_ip(value)

@@ -18,4 +18,22 @@ class Monosasi::DSL::Context::Rule::Target::BatchParameters
   def job_name(value)
     @result[:job_name] = value.to_s
   end
+
+  class BatchRetryStrategy
+    include Monosasi::DSL::TemplateHelper
+
+    def initialize(context, &block)
+      @context = context
+      @result = {}
+      instance_eval(&block)
+    end
+
+    attr_reader :result
+
+    private
+
+    def attempts(value)
+      @result[:attempts] = value
+    end
+  end
 end

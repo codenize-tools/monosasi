@@ -1,6 +1,6 @@
 require 'aws-sdk-cloudwatchevents'
 require 'diffy'
-require 'erb'
+require 'dslh'
 require 'hashie'
 require 'json'
 require 'logger'

@@ -34,7 +34,7 @@ class Monosasi::DSL::Context::Rule::Target
   end
 
   def ecs_parameters(*values, &block)
-    unless values.nil?
+    unless values.empty?
       log(:warn, "`ecs_parameter(Hash)` will no longer be available. use ecs_parameter(block)", color: :yellow)
       @result[:ecs_parameters] = Hash(*values)
     else
@@ -43,7 +43,7 @@ class Monosasi::DSL::Context::Rule::Target
   end
 
   def batch_parameters(*values, &block)
-    unless values.nil?
+    unless values.empty?
       log(:warn, "`batch_parameter(Hash)` will no longer be available. use batch_parameter(block)", color: :yellow)
       @result[:batch_parameters] = Hash(*values)
     else
