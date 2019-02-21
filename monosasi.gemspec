@@ -19,7 +19,7 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
-  spec.add_dependency 'aws-sdk', '>= 2.11.118'
+  spec.add_dependency 'aws-sdk-cloudwatchevents', '~> 1.13'
   spec.add_dependency 'diffy'
   spec.add_dependency 'hashie'
   spec.add_dependency 'parallel'
