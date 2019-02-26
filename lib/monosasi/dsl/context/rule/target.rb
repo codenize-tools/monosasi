@@ -1,5 +1,6 @@
 class Monosasi::DSL::Context::Rule::Target
   include Monosasi::DSL::TemplateHelper
+  include Monosasi::Logger::Helper # TODO: remove this line when log() would not been called
 
   def initialize(context, id, &block)
     @id = id
@@ -32,11 +33,21 @@ class Monosasi::DSL::Context::Rule::Target
     @result[:role_arn] = value.to_s
   end
 
-  def ecs_parameters(*values)
-    @result[:ecs_parameters] = Hash(*values)
+  def ecs_parameters(*values, &block)
+    unless values.empty?
+      log(:warn, "`ecs_parameter(Hash)` will no longer be available. use ecs_parameter(block)", color: :yellow)
+      @result[:ecs_parameters] = Hash(*values)
+    else
+      @result[:ecs_parameters] = Monosasi::DSL::Context::Rule::Target::EcsParameters.new(@context, &block).result
+    end
   end
 
-  def batch_parameters(*values)
-    @result[:batch_parameters] = Hash(*values)
+  def batch_parameters(*values, &block)
+    unless values.empty?
+      log(:warn, "`batch_parameter(Hash)` will no longer be available. use batch_parameter(block)", color: :yellow)
+      @result[:batch_parameters] = Hash(*values)
+    else
+      @result[:batch_parameters] = Monosasi::DSL::Context::Rule::Target::BatchParameters.new(@context, &block).result
+    end
   end
 end

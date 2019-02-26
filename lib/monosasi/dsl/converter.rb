@@ -96,9 +96,8 @@ end
     end
 
     if target[:ecs_parameters]
-      body += <<-EOS
-    ecs_parameters #{target[:ecs_parameters].inspect}
-      EOS
+      body += output_ecs_parameters(target[:ecs_parameters])
+      body += "\n"
     end
 
     if target[:role_arn]
@@ -108,9 +107,8 @@ end
     end
 
     if target[:batch_parameters]
-      body += <<-EOS
-    batch_parameters #{target[:batch_parameters].inspect}
-      EOS
+      body += output_batch_parameters(target[:batch_parameters])
+      body += "\n"
     end
 
     <<-EOS.chomp
@@ -118,5 +116,13 @@ end
     #{body.strip}
   end
     EOS
+  end
+
+  def output_ecs_parameters(params)
+    Dslh.deval({"ecs_parameters" => params}, initial_depth: 2, force_dump_braces: true)
+  end
+
+  def output_batch_parameters(params)
+   Dslh.deval({"batch_parameters" => params}, initial_depth: 2, force_dump_braces: true)
   end
 end

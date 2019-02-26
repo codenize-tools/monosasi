@@ -21,6 +21,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'aws-sdk-cloudwatchevents', '~> 1.13'
   spec.add_dependency 'diffy'
+  spec.add_dependency 'dslh'
   spec.add_dependency 'hashie'
   spec.add_dependency 'parallel'
   spec.add_dependency 'pp_sort_hash'
